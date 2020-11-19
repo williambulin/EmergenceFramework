@@ -5,7 +5,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (WIN32)
 include(C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
+elseif (APPLE)
+include(/Users/orangecat/vcpkg/scripts/buildsystems/vcpkg.cmake)
+endif ()
 
 find_package(Vulkan REQUIRED)
 find_package(glm CONFIG REQUIRED)

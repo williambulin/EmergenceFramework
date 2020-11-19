@@ -6,3 +6,5 @@
 !CMakeLists.txt
 !.gitignore
 !LICENSE
+build/**
+.cache/**
