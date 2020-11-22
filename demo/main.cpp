@@ -3,7 +3,6 @@
 #include "GameHost.hpp"
 #include "Game.hpp"
 #include "Log/Logger.hpp"
-#include "Math.hpp"
 #include "Window/GLFW.hpp"
 #include "Renderer/Vulkan/Vulkan.hpp"
 

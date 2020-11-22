@@ -46,3 +46,9 @@ auto Window::GLFW::createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR
   glfwCreateWindowSurface(instance, m_window, nullptr, std::addressof(surfaceKHR));
   return vk::SurfaceKHR{surfaceKHR};
 }
+
+auto Window::GLFW::size() const -> glm::vec2 {
+  int width{0}, height{0};
+  glfwGetFramebufferSize(m_window, std::addressof(width), std::addressof(height));
+  return {width, height};
+}

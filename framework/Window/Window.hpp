@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Libraries/Vulkan.hpp"
+#include "Libraries/glm.hpp"
 
 namespace Window {
   class Window;
@@ -21,4 +22,5 @@ public:
 
   [[nodiscard]] virtual auto getRequiredVulkanExtensions() -> std::vector<char const *>    = 0;
   [[nodiscard]] virtual auto createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR = 0;
+  [[nodiscard]] virtual auto size() const -> glm::vec2                                     = 0;
 };

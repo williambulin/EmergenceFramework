@@ -11,7 +11,7 @@ namespace Renderer::Vulkan {
   class Vulkan;
 }
 
-class shared Renderer::Vulkan::Vulkan final {
+class shared Renderer::Vulkan::Vulkan final {  // TODO: Remove shared when fully wrapped
 private:
   vk::UniqueInstance                                                      m_instance{nullptr};
   vk::SurfaceKHR                                                          m_surface{nullptr};

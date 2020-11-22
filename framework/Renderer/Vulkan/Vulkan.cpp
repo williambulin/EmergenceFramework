@@ -1,5 +1,7 @@
 #include "Vulkan.hpp"
 #include "QueueFamilies.hpp"
+#include "Swapchain.hpp"
+#include "SwapchainInfo.hpp"
 
 #include <algorithm>
 #include <set>
@@ -80,6 +82,10 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
     if (!queueFamilies.isComplete())
       return false;
 
+    SwapchainInfo swapchainInfo{physicalDevice, m_surface};
+    if (!swapchainInfo.isComplete())
+      return false;
+
     std::set<std::string> deviceExtensionsSet{deviceExtensions.begin(), deviceExtensions.end()};
     for (auto const &extension : physicalDevice.enumerateDeviceExtensionProperties())
       deviceExtensionsSet.erase(extension.extensionName);
@@ -92,8 +98,6 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
 
   auto          physicalDevice{*physicalDeviceSearch};
   QueueFamilies queueFamilies{physicalDevice, m_surface};
-  if (!queueFamilies.isComplete())
-    throw std::runtime_error{"Couldn't find every needed queue families"};
 
   std::cout << "Graphics queue index: " << queueFamilies.graphicsFamily.value() << '\n';
   std::cout << "Presentation queue index: " << queueFamilies.presentFamily.value() << '\n';
@@ -116,7 +120,7 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
   {},
   deviceQueueCreateInfos,
   {},
-  {},
+  deviceExtensions,
   std::addressof(physicalDeviceFeatures),
   };
 
@@ -124,4 +128,6 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
 
   m_graphicsQueue = m_device->getQueue(queueFamilies.graphicsFamily.value(), 0);
   m_presentQueue  = m_device->getQueue(queueFamilies.presentFamily.value(), 0);
+
+  Swapchain swapchain{window, physicalDevice, m_surface, m_device.get()};
 }

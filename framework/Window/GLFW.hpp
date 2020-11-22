@@ -28,4 +28,5 @@ public:
 
   [[nodiscard]] auto getRequiredVulkanExtensions() -> std::vector<char const *> final;
   [[nodiscard]] auto createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR final;
+  [[nodiscard]] auto size() const -> glm::vec2 final;
 };
