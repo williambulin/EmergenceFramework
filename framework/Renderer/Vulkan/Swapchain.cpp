@@ -19,7 +19,7 @@ Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevic
     return queueFamilyIndex == queueFamiliesIndices.front();
   })};
 
-  uint32_t                   imageCount{std::clamp(swapchainInfo.surfaceCapabilities.minImageCount + 1, swapchainInfo.surfaceCapabilities.minImageCount, swapchainInfo.surfaceCapabilities.maxImageCount)};
+  uint32_t                   imageCount{std::clamp(swapchainInfo.surfaceCapabilities.minImageCount + 1, swapchainInfo.surfaceCapabilities.minImageCount, std::max(swapchainInfo.surfaceCapabilities.minImageCount, swapchainInfo.surfaceCapabilities.maxImageCount))};
   vk::SwapchainCreateInfoKHR swapchainCreateInfo{
   {},
   surface,
