@@ -10,6 +10,7 @@ namespace Renderer::Vulkan {
 class Renderer::Vulkan::Swapchain final {
 public:
   vk::UniqueSwapchainKHR m_swapchain{nullptr};
+  std::vector<vk::Image> m_images{};
 
 public:
   explicit Swapchain(Window::Window &window, vk::PhysicalDevice &physicalDevice, vk::SurfaceKHR &surface, vk::Device &device);

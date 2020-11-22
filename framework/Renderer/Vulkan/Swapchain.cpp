@@ -2,6 +2,8 @@
 #include "Renderer/Vulkan/SwapchainInfo.hpp"
 #include "Renderer/Vulkan/QueueFamilies.hpp"
 
+#include <iostream>
+
 Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevice &physicalDevice, vk::SurfaceKHR &surface, vk::Device &device) {
   SwapchainInfo swapchainInfo{physicalDevice, surface};
   auto          surfaceFormat{swapchainInfo.findSurfaceFormat()};
@@ -37,4 +39,6 @@ Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevic
   };
 
   m_swapchain = device.createSwapchainKHRUnique(swapchainCreateInfo);
+  m_images    = device.getSwapchainImagesKHR(m_swapchain.get());
+  std::cout << "Got " << m_images.size() << " images out of the swapchain" << '\n';
 }
