@@ -14,7 +14,7 @@ namespace Renderer::Vulkan {
 class shared Renderer::Vulkan::Vulkan final {
 private:
   vk::UniqueInstance                                                      m_instance{nullptr};
-  vk::UniqueSurfaceKHR                                                    m_surface{nullptr};
+  vk::SurfaceKHR                                                          m_surface{nullptr};
   vk::UniqueHandle<vk::DebugUtilsMessengerEXT, vk::DispatchLoaderDynamic> m_debugUtilsMessenger{nullptr};
   vk::UniqueDevice                                                        m_device{nullptr};
   vk::Queue                                                               m_graphicsQueue{};

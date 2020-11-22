@@ -6,6 +6,7 @@
 !CMakeLists.txt
 !.gitignore
 !LICENSE
+!.clang-format
 build/**
 .cache/**
 out/**

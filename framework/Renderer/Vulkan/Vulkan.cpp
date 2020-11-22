@@ -1,7 +1,7 @@
 #include "Vulkan.hpp"
 #include "QueueFamilies.hpp"
 
-#include <ranges>
+#include <algorithm>
 #include <set>
 
 VKAPI_ATTR VkBool32 VKAPI_CALL Renderer::Vulkan::Vulkan::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, VkDebugUtilsMessengerCallbackDataEXT const *pCallbackData, void *pUserData) {
@@ -27,8 +27,8 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
   };
 
   auto instanceLayerProperties{vk::enumerateInstanceLayerProperties()};
-  bool supportsValidationLayers{std::ranges::all_of(layers, [&instanceLayerProperties](auto const &validationLayer) {
-    return std::ranges::any_of(instanceLayerProperties, [&validationLayer](auto const &layerProperty) {
+  bool supportsValidationLayers{std::all_of(layers.begin(), layers.end(), [&instanceLayerProperties](auto const &validationLayer) {
+    return std::any_of(instanceLayerProperties.begin(), instanceLayerProperties.end(), [&validationLayer](auto const &layerProperty) {
       return std::strcmp(validationLayer, layerProperty.layerName) == 0;
     });
   })};
@@ -58,7 +58,7 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
 
   m_instance = vk::createInstanceUnique(instanceCreateInfo);
 
-  m_surface = vk::UniqueSurfaceKHR{window.createVulkanSurface(m_instance.get())};
+  m_surface = window.createVulkanSurface(m_instance.get());
 
   auto instanceExtensionProperties{vk::enumerateInstanceExtensionProperties()};
   for (auto const &extensionProperty : instanceExtensionProperties)
@@ -75,8 +75,8 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
   VK_KHR_SWAPCHAIN_EXTENSION_NAME,
   };
 
-  auto physicalDeviceSearch{std::ranges::find_if(physicalDevices, [&](auto &physicalDevice) {
-    QueueFamilies queueFamilies{physicalDevice, m_surface.get()};
+  auto physicalDeviceSearch{std::find_if(physicalDevices.begin(), physicalDevices.end(), [&](auto &physicalDevice) {
+    QueueFamilies queueFamilies{physicalDevice, m_surface};
     if (!queueFamilies.isComplete())
       return false;
 
@@ -91,7 +91,7 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
     throw std::runtime_error{"Couldn't find any suitable GPUs that supports Vulkan"};
 
   auto          physicalDevice{*physicalDeviceSearch};
-  QueueFamilies queueFamilies{physicalDevice, m_surface.get()};
+  QueueFamilies queueFamilies{physicalDevice, m_surface};
   if (!queueFamilies.isComplete())
     throw std::runtime_error{"Couldn't find every needed queue families"};
 
