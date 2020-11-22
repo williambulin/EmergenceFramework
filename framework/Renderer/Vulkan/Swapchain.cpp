@@ -6,9 +6,9 @@
 
 Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevice &physicalDevice, vk::SurfaceKHR &surface, vk::Device &device) {
   SwapchainInfo swapchainInfo{physicalDevice, surface};
-  auto          surfaceFormat{swapchainInfo.findSurfaceFormat()};
-  auto          presentMode{swapchainInfo.findPresentMode()};
-  auto          extent{swapchainInfo.findExtent(window.size())};
+  m_surfaceFormat = swapchainInfo.findSurfaceFormat();
+  m_presentMode   = swapchainInfo.findPresentMode();
+  m_extent        = swapchainInfo.findExtent(window.size());
 
   QueueFamilies         queueFamilies{physicalDevice, surface};
   std::vector<uint32_t> queueFamiliesIndices{
@@ -24,9 +24,9 @@ Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevic
   {},
   surface,
   imageCount,
-  surfaceFormat.format,
-  surfaceFormat.colorSpace,
-  extent,
+  m_surfaceFormat.format,
+  m_surfaceFormat.colorSpace,
+  m_extent,
   1,
   vk::ImageUsageFlagBits::eColorAttachment,  // TODO: Change to dst for postprocessing
   exclusiveMode ? vk::SharingMode::eExclusive : vk::SharingMode::eConcurrent,
@@ -34,7 +34,7 @@ Renderer::Vulkan::Swapchain::Swapchain(Window::Window &window, vk::PhysicalDevic
   exclusiveMode ? nullptr : queueFamiliesIndices.data(),
   swapchainInfo.surfaceCapabilities.currentTransform,
   vk::CompositeAlphaFlagBitsKHR::eOpaque,  // TODO: For overlays?
-  presentMode,
+  m_presentMode,
   true,
   };
 

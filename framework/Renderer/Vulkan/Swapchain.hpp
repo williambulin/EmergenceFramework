@@ -9,6 +9,9 @@ namespace Renderer::Vulkan {
 
 class Renderer::Vulkan::Swapchain final {
 public:
+  vk::SurfaceFormatKHR   m_surfaceFormat{};
+  vk::PresentModeKHR     m_presentMode{};
+  vk::Extent2D           m_extent{};
   vk::UniqueSwapchainKHR m_swapchain{nullptr};
   std::vector<vk::Image> m_images{};
 
