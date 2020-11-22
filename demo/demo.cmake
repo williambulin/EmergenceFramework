@@ -22,4 +22,5 @@ target_link_libraries(
   demo
 
   framework
+  ${Vulkan_LIBRARIES} # TODO: Remove when renderer fully wrapped
 )
