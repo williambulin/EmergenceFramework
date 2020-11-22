@@ -67,7 +67,7 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
     std::cout << extensionProperty.extensionName << '\n';
 
   auto dispatchLoaderDynamic{vk::DispatchLoaderDynamic(m_instance.get(), vkGetInstanceProcAddr)};
-  m_debugUtilsMessenger = m_instance->createDebugUtilsMessengerEXTUnique(debugUtilsMessengerCreateInfo, nullptr, dispatchLoaderDynamic);
+  m_debugUtilsMessenger = m_instance->createDebugUtilsMessengerEXT(debugUtilsMessengerCreateInfo, nullptr, dispatchLoaderDynamic);
 
   auto physicalDevices{m_instance->enumeratePhysicalDevices()};
   if (physicalDevices.empty())
@@ -130,4 +130,11 @@ Renderer::Vulkan::Vulkan::Vulkan(Window::Window &window) {
   m_presentQueue  = m_device->getQueue(queueFamilies.presentFamily.value(), 0);
 
   Swapchain swapchain{window, physicalDevice, m_surface, m_device.get()};
+}
+
+Renderer::Vulkan::Vulkan::~Vulkan() {
+  m_instance->destroySurfaceKHR(m_surface);
+
+  auto dispatchLoaderDynamic{vk::DispatchLoaderDynamic(m_instance.get(), vkGetInstanceProcAddr)};
+  m_instance->destroyDebugUtilsMessengerEXT(m_debugUtilsMessenger, nullptr, dispatchLoaderDynamic);
 }
