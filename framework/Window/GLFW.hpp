@@ -26,5 +26,6 @@ public:
 
   void processMessages() final;
 
+  [[nodiscard]] auto getRequiredVulkanExtensions() -> std::vector<char const *> final;
   [[nodiscard]] auto createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR final;
 };

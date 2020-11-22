@@ -10,7 +10,10 @@ add_library(
   ${CMAKE_CURRENT_LIST_DIR}/Log/Logger.hpp
   ${CMAKE_CURRENT_LIST_DIR}/Math.hpp
   ${CMAKE_CURRENT_LIST_DIR}/Platform.hpp
-  ${CMAKE_CURRENT_LIST_DIR}/Renderer/Vulkan.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/Renderer/Vulkan/Vulkan.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/Renderer/Vulkan/Vulkan.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/Renderer/Vulkan/QueueFamilies.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/Renderer/Vulkan/QueueFamilies.hpp
   ${CMAKE_CURRENT_LIST_DIR}/SharedLibrary.hpp
   ${CMAKE_CURRENT_LIST_DIR}/Thread/GameThread.hpp
   ${CMAKE_CURRENT_LIST_DIR}/Thread/Thread.cpp

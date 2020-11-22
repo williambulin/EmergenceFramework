@@ -19,5 +19,6 @@ public:
 
   virtual void processMessages() = 0;
 
+  [[nodiscard]] virtual auto getRequiredVulkanExtensions() -> std::vector<char const *>    = 0;
   [[nodiscard]] virtual auto createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR = 0;
 };

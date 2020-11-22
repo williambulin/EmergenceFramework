@@ -34,6 +34,13 @@ void Window::GLFW::processMessages() {
   glfwPollEvents();
 }
 
+auto Window::GLFW::getRequiredVulkanExtensions() -> std::vector<char const *> {
+  uint32_t     glfwExtensionsCount{0};
+  char const **glfwExtensions{nullptr};
+  glfwExtensions = glfwGetRequiredInstanceExtensions(std::addressof(glfwExtensionsCount));
+  return std::vector<char const *>(glfwExtensions, glfwExtensions + glfwExtensionsCount);
+}
+
 auto Window::GLFW::createVulkanSurface(vk::Instance &instance) -> vk::SurfaceKHR {
   VkSurfaceKHR surfaceKHR{nullptr};
   glfwCreateWindowSurface(instance, m_window, nullptr, std::addressof(surfaceKHR));
