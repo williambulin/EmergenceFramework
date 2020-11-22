@@ -13,22 +13,27 @@ private:
   std::unique_ptr<Renderer::Vulkan::Vulkan> m_vulkan{nullptr};
 
 private:
-  [[nodiscard]] bool update(float) final {
-    m_window->processMessages();
-    return m_window->isOpen();
-  }
+  [[nodiscard]] bool update(float) final;
 
 public:
-  GameDemo(int argc = 0, char **argv = nullptr, char **env = nullptr) : Game{argc, argv, env} {
-    std::cout << "GameDemo::GameDemo" << '\n';
-    m_window = std::make_unique<Window::GLFW>();
-    m_vulkan = std::make_unique<Renderer::Vulkan::Vulkan>(*m_window.get());
-  }
-
-  ~GameDemo() final {
-    std::cout << "GameDemo::~GameDemo" << '\n';
-  }
+  GameDemo(int argc = 0, char **argv = nullptr, char **env = nullptr);
+  ~GameDemo() final;
 };
+
+bool GameDemo::update(float) {
+  m_window->processMessages();
+  return m_window->isOpen();
+}
+
+GameDemo::GameDemo(int argc, char **argv, char **env) : Game{argc, argv, env} {
+  std::cout << "GameDemo::GameDemo" << '\n';
+  m_window = std::make_unique<Window::GLFW>();
+  m_vulkan = std::make_unique<Renderer::Vulkan::Vulkan>(*m_window.get());
+}
+
+GameDemo::~GameDemo() {
+  std::cout << "GameDemo::~GameDemo" << '\n';
+}
 
 int main(int argc, char **argv, char **env) {
   return GameHost::run<GameDemo>(argc, argv, env);

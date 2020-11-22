@@ -8,9 +8,9 @@ namespace Window {
 
 class Window::Window {
 public:
-  explicit Window()      = default;
+  explicit Window();
   Window(Window const &) = delete;
-  virtual ~Window()      = default;
+  virtual ~Window();
 
   Window &operator=(Window const &) = delete;
 

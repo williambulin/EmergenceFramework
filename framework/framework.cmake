@@ -20,6 +20,7 @@ add_library(
   ${CMAKE_CURRENT_LIST_DIR}/Thread/Thread.hpp
   ${CMAKE_CURRENT_LIST_DIR}/Window/GLFW.cpp
   ${CMAKE_CURRENT_LIST_DIR}/Window/GLFW.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/Window/Window.cpp
   ${CMAKE_CURRENT_LIST_DIR}/Window/Window.hpp
 )
 
