@@ -9,6 +9,8 @@ if (WIN32)
 include(C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
 elseif (APPLE)
 include(/Users/orangecat/vcpkg/scripts/buildsystems/vcpkg.cmake)
+else ()
+include(/home/orangecat/vcpkg/scripts/buildsystems/vcpkg.cmake)
 endif ()
 
 find_package(Vulkan REQUIRED)
